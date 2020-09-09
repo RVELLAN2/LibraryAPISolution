@@ -43,7 +43,7 @@ namespace LibraryAPI.Controllers
         }
 
         //GET /employees/938938
-        [HttpGet("employees/{employeeId:int}")]
+        [HttpGet("employees/{employeeId:int}", Name="employees#getemployee")]
         public ActionResult GetAnEmplyee(int employeeId)
         {
             //goto the database and get employee data
