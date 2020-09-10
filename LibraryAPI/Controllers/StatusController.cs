@@ -4,16 +4,19 @@ using System.Linq;
 using System.Threading.Tasks;
 using LibraryAPI.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 
 namespace LibraryAPI.Controllers
 {
     public class StatusController : Controller
     {
         ISystemTime Clock;
+        IConfiguration Config;
 
-        public StatusController(ISystemTime clock)
+        public StatusController(ISystemTime clock, IConfiguration config)
         {
             Clock = clock;
+            Config = config;
         }
 
         [HttpPost("employees")]
@@ -74,7 +77,7 @@ namespace LibraryAPI.Controllers
             var status = new StatusResponse
             {
                 Message = "Looks good on my end. Party On !",
-                CheckedBy = "Joe Schmidt",
+                CheckedBy = Config.GetValue<string>("onCall"),
                 WhenChecked = Clock.GetCurrent()
             };
 
