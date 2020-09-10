@@ -2,9 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using LibraryAPI.Domain;
+using LibraryAPI.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -25,6 +28,12 @@ namespace LibraryAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddScoped<ISystemTime, SystemTime>();
+
+            services.AddDbContext<LibraryDataContext>(options =>
+            {
+                options.UseSqlServer(@"server=.\sqlexpress;database=library;integrated security=true");
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

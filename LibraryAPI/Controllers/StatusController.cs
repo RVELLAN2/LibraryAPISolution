@@ -2,12 +2,20 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using LibraryAPI.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LibraryAPI.Controllers
 {
     public class StatusController : Controller
     {
+        ISystemTime Clock;
+
+        public StatusController(ISystemTime clock)
+        {
+            Clock = clock;
+        }
+
         [HttpPost("employees")]
         public ActionResult Hire([FromBody]EmployeeCreateRequest employeeToHire)
         {
@@ -67,7 +75,7 @@ namespace LibraryAPI.Controllers
             {
                 Message = "Looks good on my end. Party On !",
                 CheckedBy = "Joe Schmidt",
-                WhenChecked = DateTime.Now
+                WhenChecked = Clock.GetCurrent()
             };
 
             return Ok(status);
