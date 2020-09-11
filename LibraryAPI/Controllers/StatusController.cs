@@ -19,6 +19,7 @@ namespace LibraryAPI.Controllers
             Config = config;
         }
 
+        [ApiExplorerSettings(IgnoreApi = true)]
         [HttpPost("employees")]
         public ActionResult Hire([FromBody]EmployeeCreateRequest employeeToHire)
         {
